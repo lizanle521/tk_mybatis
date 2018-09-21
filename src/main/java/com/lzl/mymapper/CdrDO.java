@@ -1,14 +1,14 @@
 package com.lzl.mymapper;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 @Table(name="cdr")
 public class CdrDO {
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdrId;
     private String caller;
     private String callee;

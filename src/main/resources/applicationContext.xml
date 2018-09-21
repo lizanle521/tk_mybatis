@@ -65,11 +65,28 @@
     </bean>
 
     <bean id="txManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.query.substitutions">true</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.lzl.model" />
+
+    </bean>
+
+    <bean id="hiberanteTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations">
             <array>
@@ -82,6 +99,8 @@
     <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 此处value改成你的继承tk.mapper的接口类包路径 -->
         <property name="basePackage" value="com.lzl.mymapper" />
-        <property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
+        <property name="markerInterface" value="tk.mybatis.mapper.common.Mapper"/>
     </bean>
+
 </beans>

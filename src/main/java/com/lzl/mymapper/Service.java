@@ -12,6 +12,9 @@ public class Service {
     @Autowired
     private CdrMapper cdrMapper;
 
+    public Service() {
+    }
+
     public void insert(List<CdrDO> list){
         if(StringUtils.isEmpty(list)){
             return;

@@ -2,6 +2,7 @@ package com.lzl;
 
 import com.lzl.mymapper.CdrDO;
 import com.lzl.mymapper.Service;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,5 +37,10 @@ public class test {
     public void test(){
         List<CdrDO> init = init();
         service.insert(init);
+    }
+
+    @Test
+    public void testHibernate() {
+
     }
 }
